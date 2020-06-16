@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
+import $, { timers } from 'jquery';
 import './card.css';
-import { render } from '@testing-library/react';
 
 class Card extends React.Component {
   state = {
@@ -12,7 +11,7 @@ class Card extends React.Component {
     cardIndex: 0,
     categoryIndex: 0 
   }
-
+  
   componentDidMount () {
     axios.get('https://localhost:44393/api/collection')
       .then(res => {
@@ -35,31 +34,52 @@ class Card extends React.Component {
         });
       })
   }
-
+  backApiCall = () => {
+    axios.get('https://localhost:44393/api/collection')
+      .then(res => {
+        if(this.state.cardIndex == -1){
+          this.setState({ 
+            categoryIndex: this.state.categoryIndex - 1,
+            cardIndex: res.data[this.state.categoryIndex - 1].cards.length - 1
+          })
+        }
+        this.setState({
+          word: res.data[this.state.categoryIndex].cards[this.state.cardIndex].word,
+          def: res.data[this.state.categoryIndex].cards[this.state.cardIndex].definition,
+          category: res.data[this.state.categoryIndex].title
+        });
+      })
+  }
   addIndex = () => {
     this.setState({ cardIndex: this.state.cardIndex + 1 })
     this.componentDidMount(); 
   }
 
-  render = () => {
-    const cardStyle = {
-      width: "50rem",
-      margin: "0 auto",
-      float: "none", 
-      position: "relative",
-      top: "300px"
+  minusIndex = () => {
+    if(this.state.categoryIndex != 0 || this.state.cardIndex != 0){
+      this.setState({ cardIndex: this.state.cardIndex - 1 })
+      this.backApiCall(); 
     }
+  }
+
+  render = () => {
     return (
       <div>
-         <div className="card" style={cardStyle}> 
-            <div className="card-body">
-              <h1 className="card-title">{ this.state.word }</h1>
-              <h3 className="card-subtitle mb-2 text-muted">{ this.state.category }</h3>
-              <h4 className="card-text">{ this.state.def }</h4>
-              <button onClick={this.addIndex}>next</button>
+        <div id="theCard">
+            <div id="front">
+                <h5 id="category">{ this.state.category }</h5>
+                <h1 id="word">{ this.state.word }</h1>
+            </div>
+            <div id="back" className="card-body">
+              <h4 id="def">{ this.state.def }</h4>
+            </div>
           </div>
-        </div>
+          <div id="buttons">
+              <button className="btn btn-warning" id="backBtn" onClick={this.minusIndex}>Back</button>
+              <button className="btn btn-primary" id="next" onClick={this.addIndex}>Next</button>
+          </div>
       </div>
+      
      
     )
   }
