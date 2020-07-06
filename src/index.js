@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Card from './card';
 import Create from './components/create'
+import Nav from './components/nav'
 import * as serviceWorker from './serviceWorker';
-import "bootstrap/dist/css/bootstrap.css"
+import 'bootswatch/dist/sandstone/bootstrap.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
+    <Nav />
     <Card />
     <Create />
   </React.StrictMode>,

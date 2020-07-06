@@ -1,0 +1,32 @@
+#categoriesInp {
+    width: 100px;
+}
+#wordInp {
+    width: 100px;
+}
+#defInp {
+    width: 200px;
+    height: 100px;
+}
+#createFront {
+    position: relative;
+    bottom: 100px;
+    padding: 15px;
+    border-radius: 10px;
+    width: fit-content;
+    height: 350px;
+    background: #F8F5F0;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+#createBack{
+    position: relative;
+    padding: 15px;
+    border-radius: 10px;
+    width: 200px;
+    height: 350px;
+    background: #F8F5F0;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+#addStack {
+    margin-bottom: 20px;
+}

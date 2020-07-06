@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import './create.css';
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
 
 class Create extends React.Component {
     state = {
         word: " ",
         definition: " ",
         stackCategory: " ",
-        categories: []
+        categories: [],
+        flipped: false
     }
 
     componentDidMount () {
@@ -57,24 +60,47 @@ class Create extends React.Component {
             stackCategory : event.target.value
         })
     }
-
+    
+    flip = (e) => {
+        this.setState({
+            flipped: true
+        })
+    }
+    simulateClick = (e) => {
+        e.click()
+      }
     render() {
         console.log(this.state.categories)
         return (
-          <div>
-            <select value={this.state.stackCategory} onChange={this.handleStackChange}>
-                <option>Select</option>
-                {this.state.categories.map(category => (
-                    <option key={category} value={category}>
-                        {category}
-                    </option>
-                ))}
-            </select>
-            <br></br>
-            <input type="text" value={this.state.word} onChange={this.handleWordChange}></input><br></br>
-            <input type="text" value={this.state.definition} onChange={this.handleDefChange}></input><br></br>
-            <button type="submit" onClick={this.addCard}>Add New Word</button>
-          </div>
+          <div className="container">
+            <div className="row">
+                <div className="col-md-3">
+                    <Flippy id="createCard"
+                    ref={(r) => this.flippyHorizontal = r}
+                    flipOnClick={this.state.flipped}
+                    >
+                        <FrontSide ref={this.simulateClick}  onClick={()=> console.log('clicked')} id="createFront">
+                            <button type="button" onClick={this.flip}>Toggle Me!</button>
+                            <select id="categoriesInp" class="form-control" value={this.state.stackCategory} onChange={this.handleStackChange}>
+                                <option>-select-</option>
+                                {this.state.categories.map(category => (
+                                    <option key={category} value={category}>
+                                        {category}
+                                    </option>
+                                ))}
+                            </select>
+                            <br></br>
+                            <input id="wordInp" className="form-control" type="text" value={this.state.word} onChange={this.handleWordChange}></input><br></br>
+                            <textarea id="defInp" className="form-control" type="text" value={this.state.definition} onChange={this.handleDefChange}></textarea><br></br>
+                            <button className="btn btn-success" type="submit" onClick={this.addCard}>Add New Word</button>
+                        </FrontSide>
+                        <BackSide id="createBack">
+                            <input id="wordInp" className="form-control" type="text" value={this.state.word} onChange={this.handleWordChange}></input><br></br>
+                        </BackSide>
+                    </Flippy>
+                </div>
+            </div>
+        </div>            
         )
       }
 }

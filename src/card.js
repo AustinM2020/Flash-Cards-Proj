@@ -64,23 +64,25 @@ class Card extends React.Component {
 
   render = () => {
     return (
-      <div>
-        <div id="theCard">
-            <div id="front">
-                <h5 id="category">{ this.state.category }</h5>
-                <h1 id="word">{ this.state.word }</h1>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <div id="theCard">
+              <div id="front">
+                  <h5 id="category">{ this.state.category }</h5>
+                  <h1 id="word">{ this.state.word }</h1>
+              </div>
+              <div id="back" className="card-body">
+                <h4 id="def">{ this.state.def }</h4>
+              </div>
             </div>
-            <div id="back" className="card-body">
-              <h4 id="def">{ this.state.def }</h4>
+            <div id="buttons">
+                <button className="btn btn-warning" id="backBtn" onClick={this.minusIndex}>Back</button>
+                <button className="btn btn-primary" id="next" onClick={this.addIndex}>Next</button>
             </div>
           </div>
-          <div id="buttons">
-              <button className="btn btn-warning" id="backBtn" onClick={this.minusIndex}>Back</button>
-              <button className="btn btn-primary" id="next" onClick={this.addIndex}>Next</button>
-          </div>
+        </div>
       </div>
-      
-     
     )
   }
 }
