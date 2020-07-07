@@ -9,7 +9,7 @@ class Create extends React.Component {
         definition: " ",
         stackCategory: " ",
         categories: [],
-        flipped: false
+        category: " "
     }
 
     componentDidMount () {
@@ -43,6 +43,15 @@ class Create extends React.Component {
         })
     }
 
+    addCategory = () => {
+        axios.post('https://localhost:44393/api/stack', {
+            "title": `${this.state.category}`
+        })
+        .then(function (response) {
+            console.log(response)
+        })
+    }
+
     handleWordChange = (event) => {
         this.setState({
             word: event.target.value
@@ -57,18 +66,16 @@ class Create extends React.Component {
 
     handleStackChange = (event) => {
         this.setState({
-            stackCategory : event.target.value
+            stackCategory: event.target.value
+        })
+    }
+
+    handleCategoryChange = (event) => {
+        this.setState({
+            category: event.target.value
         })
     }
     
-    flip = (e) => {
-        this.setState({
-            flipped: true
-        })
-    }
-    simulateClick = (e) => {
-        e.click()
-      }
     render() {
         console.log(this.state.categories)
         return (
@@ -77,11 +84,11 @@ class Create extends React.Component {
                 <div className="col-md-3">
                     <Flippy id="createCard"
                     ref={(r) => this.flippyHorizontal = r}
-                    flipOnClick={this.state.flipped}
+                    flipOnClick={false}
                     >
-                        <FrontSide ref={this.simulateClick}  onClick={()=> console.log('clicked')} id="createFront">
-                            <button type="button" onClick={this.flip}>Toggle Me!</button>
-                            <select id="categoriesInp" class="form-control" value={this.state.stackCategory} onChange={this.handleStackChange}>
+                        <FrontSide id="createFront">
+                            <button id="addStack" className="btn btn-primary" type="button" onClick={() => this.flippyHorizontal.toggle()}>Add New Category</button><br></br>
+                            <select id="categoriesInp" className="form-control" value={this.state.stackCategory} onChange={this.handleStackChange}>
                                 <option>-select-</option>
                                 {this.state.categories.map(category => (
                                     <option key={category} value={category}>
@@ -95,7 +102,9 @@ class Create extends React.Component {
                             <button className="btn btn-success" type="submit" onClick={this.addCard}>Add New Word</button>
                         </FrontSide>
                         <BackSide id="createBack">
-                            <input id="wordInp" className="form-control" type="text" value={this.state.word} onChange={this.handleWordChange}></input><br></br>
+                            <input id="wordInp" className="form-control" type="text" value={this.state.category} onChange={this.handleCategoryChange}></input><br></br>
+                            <button id="cancel" className="btn btn-danger" type="button" onClick={() => this.flippyHorizontal.toggle()}>Cancel</button>
+                            <button className="btn btn-success" onClick={this.addCategory}>Confirm</button>
                         </BackSide>
                     </Flippy>
                 </div>

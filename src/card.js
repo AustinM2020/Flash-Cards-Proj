@@ -15,7 +15,7 @@ class Card extends React.Component {
   componentDidMount () {
     axios.get('https://localhost:44393/api/collection')
       .then(res => {
-        if(this.state.cardIndex > res.data[this.state.categoryIndex].cards.length - 1){
+        if(this.state.cardIndex > res.data[this.state.categoryIndex].cards.length - 1 && res.data[this.state.categoryIndex].cards.length >= 1){
           this.setState({ 
             cardIndex: 0,
             categoryIndex: this.state.categoryIndex + 1
@@ -27,11 +27,13 @@ class Card extends React.Component {
              })
            }
         }
-        this.setState({
-          word: res.data[this.state.categoryIndex].cards[this.state.cardIndex].word,
-          def: res.data[this.state.categoryIndex].cards[this.state.cardIndex].definition,
-          category: res.data[this.state.categoryIndex].title
-        });
+        if(res.data[this.state.categoryIndex].cards.length >= 1){
+          this.setState({
+            word: res.data[this.state.categoryIndex].cards[this.state.cardIndex].word,
+            def: res.data[this.state.categoryIndex].cards[this.state.cardIndex].definition,
+            category: res.data[this.state.categoryIndex].title
+          })
+        }
       })
   }
   backApiCall = () => {

@@ -5,7 +5,7 @@
 }
 #buttons {
   position: relative;
-  top: 230px;
+  top: 210px;
   display: block;
   text-align: center;
 }
@@ -32,7 +32,7 @@
   float: none;
   margin: 0 auto;
   position: relative;
-  top: 200px;
+  top: 180px;
   transform-style: preserve-3d;
   transition: all 1s ease;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
