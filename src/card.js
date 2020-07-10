@@ -15,19 +15,21 @@ class Card extends React.Component {
   componentDidMount () {
     axios.get('https://localhost:44393/api/collection')
       .then(res => {
-        if(this.state.cardIndex > res.data[this.state.categoryIndex].cards.length - 1 && res.data[this.state.categoryIndex].cards.length >= 1){
+        if(this.state.cardIndex > res.data[this.state.categoryIndex].cards.length - 1 ){
+          
           this.setState({ 
             cardIndex: 0,
             categoryIndex: this.state.categoryIndex + 1
            })
-           if(this.state.categoryIndex > res.data.length - 1){
+           if(this.state.categoryIndex > res.data.length - 1 || res.data[this.state.categoryIndex].cards.length == 0){
             this.setState({ 
               cardIndex: 0,
               categoryIndex: 0
              })
            }
         }
-        if(res.data[this.state.categoryIndex].cards.length >= 1){
+        if(res.data[this.state.categoryIndex].cards.length >= 1) {
+          console.log(res.data[this.state.categoryIndex].cards[this.state.cardIndex].word)
           this.setState({
             word: res.data[this.state.categoryIndex].cards[this.state.cardIndex].word,
             def: res.data[this.state.categoryIndex].cards[this.state.cardIndex].definition,

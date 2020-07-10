@@ -26,6 +26,7 @@ class Create extends React.Component {
       }
     
     addCard = () => {
+        var str = "";
         var stackId = 0;
         for(var i = 0; i < this.state.categories.length; i++){
             if(this.state.stackCategory == this.state.categories[i]){
@@ -35,17 +36,23 @@ class Create extends React.Component {
         console.log(stackId)
         axios.post('https://localhost:44393/api/card', {
             "stackId": stackId,
-            "word": `${this.state.word}`,
-            "definition": `${this.state.definition}`
+            "word": `${this.state.word.trim()}`,
+            "definition": `${this.state.definition.trim()}`
         })
         .then(function (response) {
             console.log(response);
         })
     }
 
+    clearInputs = () => {
+        this.setState({
+            
+        })
+    }
+
     addCategory = () => {
         axios.post('https://localhost:44393/api/stack', {
-            "title": `${this.state.category}`
+            "title": `${this.state.category.trim()}`
         })
         .then(function (response) {
             console.log(response)
